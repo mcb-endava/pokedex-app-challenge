@@ -1,22 +1,30 @@
-import { Controller, Get, Post, Delete, Param } from '@nestjs/common';
-import { FavoritesService } from './favorites.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Param,
+  Body,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { FavoritesService, FavoritePokemon } from './favorites.service';
 
 @Controller('favorites')
 export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
 
   @Get()
-  getFavorites() {
+  getFavorites(): FavoritePokemon[] {
     return this.favoritesService.getFavorites();
   }
 
-  @Post(':name')
-  addFavorite(@Param('name') name: string) {
-    return this.favoritesService.addFavorite(name);
+  @Post()
+  addFavorite(@Body() body: { id: number; name: string }) {
+    return this.favoritesService.addFavorite(body);
   }
 
-  @Delete(':name')
-  removeFavorite(@Param('name') name: string) {
-    return this.favoritesService.removeFavorite(name);
+  @Delete(':id')
+  removeFavorite(@Param('id', ParseIntPipe) id: number) {
+    return this.favoritesService.removeFavorite(id);
   }
 }

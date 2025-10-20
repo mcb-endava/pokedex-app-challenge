@@ -1,20 +1,29 @@
 import { Injectable } from '@nestjs/common';
 
+export interface FavoritePokemon {
+  id: number;
+  name: string;
+}
+
 @Injectable()
 export class FavoritesService {
-  private favorites = new Set<string>(); // Set avoids duplicate names
-
-  addFavorite(name: string) {
-    this.favorites.add(name.toLowerCase());
-    return Array.from(this.favorites);
-  }
-
-  removeFavorite(name: string) {
-    this.favorites.delete(name.toLowerCase());
-    return Array.from(this.favorites);
-  }
+  private favorites: FavoritePokemon[] = [];
 
   getFavorites() {
-    return Array.from(this.favorites);
+    return this.favorites;
+  }
+
+  addFavorite(pokemon: FavoritePokemon) {
+    // Avoid duplicates
+    const exists = this.favorites.some((p) => p.id === pokemon.id);
+    if (!exists) {
+      this.favorites.push(pokemon);
+    }
+    return this.favorites;
+  }
+
+  removeFavorite(id: number) {
+    this.favorites = this.favorites.filter((p) => p.id !== id);
+    return this.favorites;
   }
 }
