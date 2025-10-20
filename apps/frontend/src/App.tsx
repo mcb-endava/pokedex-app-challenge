@@ -1,10 +1,10 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from './components/Header'
-// import { Container } from '@mui/material'
 import './App.css'
-import PokemonList from "./components/PokemonList";
+import PokemonList from "./components/pokemon/PokemonList";
 import RouteError from "./components/RouteError";
+import PokemonDetails from "./components/pokemon/PokemonDetails";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
       <Header />
         <Routes>
           <Route path="/" element={<PokemonList />} />
-          {/* <Route path="/pokemon/:name" element={<PokemonDetailPage />} /> */}
+          <Route path="/pokemon/:name" element={<PokemonDetails />} />
           <Route path="*" element={<RouteError /> } />
         </Routes>
     </BrowserRouter>
