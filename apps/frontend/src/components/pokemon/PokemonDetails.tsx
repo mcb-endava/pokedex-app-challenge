@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-// import axios from "axios";
+import api from "../../service/api";
+
 import {
   Box,
   Typography,
-  CircularProgress,
   Button,
   Grid,
   Chip,
 } from "@mui/material";
 import { Loading } from "../Loading";
-import { pikachuMock } from "../../mocks/pokemon.mock";
+// import { pikachuMock } from "../../mocks/pokemon.mock";
 import { capitalizeFirstLetter } from "../../utils/stringUtils";
 
 interface PokemonDetails {
@@ -30,16 +30,15 @@ export default function PokemonDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // axios
-    //   .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-    //   .then((res) => setPokemon(res.data))
-    //   .catch(console.error)
-    //   .finally(() => setLoading(false));
-    setTimeout(() => {
-      // Mock data since backend is not connected
-      setPokemon({...pikachuMock});
-      setLoading(false);
-    }, 2000);   
+    api.get(`/pokemon/${name}`)
+        .then((res) => setPokemon(res.data))
+        .catch(console.error)
+        .finally(() => setLoading(false));
+    // setTimeout(() => {
+    //   // Mock data since backend is not connected
+    //   setPokemon({...pikachuMock});
+    //   setLoading(false);
+    // }, 2000);   
   }, [name]);
 
   if (loading)

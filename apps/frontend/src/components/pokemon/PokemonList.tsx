@@ -1,23 +1,17 @@
 import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { PokemonCard } from "./PokemonCard";
-import { pikachuMock } from "../../mocks/pokemon.mock";
 import { capitalizeFirstLetter } from "../../utils/stringUtils";
 import { SearchInput } from "../SearchInput";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
+import api from "../../service/api";
 
 interface Pokemon {
   name: string;
   url?: string;
   [key: string]: any;
 }
-
-const mockList: Pokemon[] = [
-  pikachuMock,
-  { ...pikachuMock, name: "pikachu2", },
-  { ...pikachuMock, name: "pikachu3", },
-];
 
 export default function PokemonList() {
 
@@ -28,12 +22,22 @@ export default function PokemonList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // update with real fetch when backend is connected
-    setTimeout(() => {
-      setPokemons(mockList);
-      setFilteredPokemons(mockList);
-      setLoading(false);
-    }, 2000);
+    const fetchData = async () => {
+      try {
+        const response = await api.get('/pokemon?limit=20');
+        const results = response.data.results;
+        console.log(results);
+        
+        setPokemons(results);
+        setFilteredPokemons(response.data.results);
+      } catch (error) {
+        console.error("Error fetching Pokémon list:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
    useEffect(() => {
@@ -49,16 +53,17 @@ export default function PokemonList() {
     <>
       <SearchInput value={search} onChange={setSearch} />
       <Grid container spacing={4} justifyContent="center">
-        {filteredPokemons.map((p, index) => (
-          <Grid key={index}>
-            <PokemonCard
-              name={capitalizeFirstLetter(p.name)}
-              image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`}
-              types={p.types.map((t: any) => capitalizeFirstLetter(t.type.name))}
-              onClick={() => navigate(`/pokemon/${p.name}`)}
+        {filteredPokemons.map((p, index) => {
+          const id = p.url?.split("/")[6];
+          return (
+            <Grid key={index}>
+              <PokemonCard
+                name={capitalizeFirstLetter(p.name)}
+                image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                onClick={() => navigate(`/pokemon/${p.name}`)}
             />
           </Grid>
-        ))}
+        )})}
       </Grid>
     </>
   );
