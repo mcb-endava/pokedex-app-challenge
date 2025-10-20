@@ -6,6 +6,7 @@ import { SearchInput } from "../SearchInput";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
 import api from "../../service/api";
+import EmptyListState from "../EmptyState";
 
 interface Pokemon {
   name: string;
@@ -27,7 +28,7 @@ export default function PokemonList() {
         const response = await api.get('/pokemon?limit=20');
         const results = response.data.results;
         console.log(results);
-        
+
         setPokemons(results);
         setFilteredPokemons(response.data.results);
       } catch (error) {
@@ -40,7 +41,7 @@ export default function PokemonList() {
     fetchData();
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     const term = search.toLowerCase();
     const filteredList = pokemons.filter((p) => p.name.includes(term));
     setFilteredPokemons(filteredList);
@@ -49,21 +50,28 @@ export default function PokemonList() {
   if (loading)
     return <Loading text="Catching Pokemons..." />;
 
+
+
   return (
     <>
       <SearchInput value={search} onChange={setSearch} />
       <Grid container spacing={4} justifyContent="center">
-        {filteredPokemons.map((p, index) => {
-          const id = p.url?.split("/")[6];
-          return (
-            <Grid key={index}>
-              <PokemonCard
-                name={capitalizeFirstLetter(p.name)}
-                image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-                onClick={() => navigate(`/pokemon/${p.name}`)}
-            />
-          </Grid>
-        )})}
+        {
+          filteredPokemons.length === 0 ?
+            <EmptyListState text={"No Pokémons found"} /> :
+            filteredPokemons.map((p, index) => {
+              const id = p.url?.split("/")[6];
+              return (
+                <Grid key={index}>
+                  <PokemonCard
+                    name={capitalizeFirstLetter(p.name)}
+                    image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                    onClick={() => navigate(`/pokemon/${p.name}`)}
+                  />
+                </Grid>
+              )
+            })
+        }
       </Grid>
     </>
   );
