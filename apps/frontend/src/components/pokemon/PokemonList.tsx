@@ -5,7 +5,7 @@ import { capitalizeFirstLetter } from "../../utils/stringUtils";
 import { SearchInput } from "../SearchInput";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
-import api from "../../service/api";
+import api from "../../services/api";
 import EmptyListState from "../EmptyState";
 
 interface Pokemon {
@@ -27,8 +27,6 @@ export default function PokemonList() {
       try {
         const response = await api.get('/pokemon?limit=20');
         const results = response.data.results;
-        console.log(results);
-
         setPokemons(results);
         setFilteredPokemons(response.data.results);
       } catch (error) {
@@ -48,9 +46,7 @@ export default function PokemonList() {
   }, [search, pokemons]);
 
   if (loading)
-    return <Loading text="Catching Pokemons..." />;
-
-
+    return <Loading text="Catching all Pokemons..." />;
 
   return (
     <>
