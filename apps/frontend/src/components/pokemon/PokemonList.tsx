@@ -5,8 +5,8 @@ import { capitalizeFirstLetter } from "../../utils/stringUtils";
 import { SearchInput } from "../SearchInput";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
-import api from "../../services/api";
 import EmptyListState from "../EmptyState";
+import { getPokemonList } from "../../services/api";
 
 interface Pokemon {
   name: string;
@@ -25,10 +25,9 @@ export default function PokemonList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get('/pokemon?limit=50');
-        const results = response.data.results;
+        const results = await getPokemonList(50);
         setPokemons(results);
-        setFilteredPokemons(response.data.results);
+        setFilteredPokemons(results);
       } catch (error) {
         console.error("Error fetching Pokémon list:", error);
       } finally {
