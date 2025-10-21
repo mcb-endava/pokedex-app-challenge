@@ -3,13 +3,18 @@
 This repository contains a full-stack engineering assessment for a Pokédex application.  
 It consists of two main apps: a frontend (React + TypeScript + MUI) and a backend (NestJS + TypeScript) that proxies the public PokéAPI and manages favorites.
 
-## Overview
+## Demo
 
-![alt text](PokedexAppPreview.png)
+<video controls src="demo/Demo.mov" title="Title"></video>
+
+## Overview
 
 - **Frontend** (`/apps/frontend`): a responsive UI allowing users to browse Pokémon, view details, search by name, and mark favorites.  
 - **Backend** (`/apps/backend`): API layer that fetches data from the public PokéAPI, handles favorites (in-memory or persisted), and serves as the data source for the frontend.  
 - Shared configuration (TypeScript base config, workspace root) ensures both apps follow consistent standards.
+
+![alt text](demo/PokedexAppPreview.png)
+![alt text](demo/PokedexAppPreview2.png)
 
 ## Tech Stack
 
@@ -26,7 +31,6 @@ It consists of two main apps: a frontend (React + TypeScript + MUI) and a backen
 - **Monorepo Setup**:
   - npm workspaces
   - Root `tsconfig.base.json` for shared TS settings
-
 
 ## Getting Started
 
@@ -58,12 +62,42 @@ It consists of two main apps: a frontend (React + TypeScript + MUI) and a backen
 
 ## Application Features (MVP)
 
-- Browse Pokémon list (pagination or fixed limit)
+- Browse Pokémon list
 - Search Pokémon by name (client-side filtering)
 - View detailed data for a chosen Pokémon: image, stats, types, abilities, height/weight
 - Mark/unmark favorites that are fetched from backend and stored in state
 - UI built with Material UI, responsive design
 - Backend serves as proxy and manages favorites state
+
+## Testing
+
+Both layers include automated tests:
+
+### Backend
+
+```npm run test:backend```
+
+
+Runs Jest unit and integration tests for:
+
+- PokemonService
+- PokemonController
+- FavoritesService
+- FavoritesController
+
+
+### Frontend
+
+```npm run test:frontend```
+
+Runs Vitest + React Testing Library tests for:
+
+- All Components
+- Zustand store logic
+
+To view coverage:
+
+```npm run coverage```
 
 ## Future Improvements
 
@@ -79,3 +113,5 @@ It consists of two main apps: a frontend (React + TypeScript + MUI) and a backen
 ## License & Acknowledgments
 
 This project is provided as part of an engineering assessment. The public PokéAPI (https://pokeapi.co/) is used for Pokémon data.
+
+Project by: Maria Camila Beltran - Endava
