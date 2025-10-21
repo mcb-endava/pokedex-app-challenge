@@ -25,7 +25,7 @@ export default function PokemonList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get('/pokemon?limit=20');
+        const response = await api.get('/pokemon?limit=50');
         const results = response.data.results;
         setPokemons(results);
         setFilteredPokemons(response.data.results);
