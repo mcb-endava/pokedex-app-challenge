@@ -5,7 +5,7 @@ It consists of two main apps: a frontend (React + TypeScript + MUI) and a backen
 
 ## Demo
 
-<video controls src="demo/Demo.mov" title="Title"></video>
+<video controls src="https://github.com/user-attachments/assets/9c40a7f1-85ba-43e3-8ed3-46cc5cbcecdc" title="Demo"></video>
 
 ## Overview
 
