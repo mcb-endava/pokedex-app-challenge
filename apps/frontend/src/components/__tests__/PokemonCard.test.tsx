@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { PokemonCard } from "../pokemon/PokemonCard";
 import { usePokemonStore } from "../../store/pokemonStore";
 import { vi } from "vitest";

@@ -8,7 +8,7 @@ interface PokemonCardProps {
 
 export function PokemonCard({ name, image, onClick }: PokemonCardProps) {
   return (
-    <Card onClick={onClick}
+    <Card data-testid="pokemon-card" onClick={onClick}
       sx={{
         width: 250,
         textAlign: "center",
