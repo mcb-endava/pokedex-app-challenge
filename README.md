@@ -5,8 +5,8 @@ It consists of two main apps: a frontend (React + TypeScript + MUI) and a backen
 
 ## Overview
 
-![alt text](PokedexAppPreview.png)
-![alt text](PokedexAppPreview2.png)
+![alt text](demo/PokedexAppPreview.png)
+![alt text](demo/PokedexAppPreview2.png)
 
 - **Frontend** (`/apps/frontend`): a responsive UI allowing users to browse Pokémon, view details, search by name, and mark favorites.  
 - **Backend** (`/apps/backend`): API layer that fetches data from the public PokéAPI, handles favorites (in-memory or persisted), and serves as the data source for the frontend.  
@@ -107,8 +107,12 @@ To view coverage:
 - Add CI/CD workflow with GitHub Actions
 - Add Storybook to show reusable components
 
+## Demo
+
+<video controls src="demo/Demo.mov" title="Title"></video>
+
 ## License & Acknowledgments
 
 This project is provided as part of an engineering assessment. The public PokéAPI (https://pokeapi.co/) is used for Pokémon data.
 
-Project by: Maria Camila Beltran - Endavas
+Project by: Maria Camila Beltran - Endava
