@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import api from "../../services/api";
+import { getPokemonDetails } from "../../services/api";
 
 import {
   Box,
@@ -42,13 +42,19 @@ export default function PokemonDetailPage() {
   const prevFave = useRef(fave);
 
   useEffect(() => {
-    api.get(`/pokemon/${name}`)
-      .then((res) => setPokemon(res.data))
-      .catch(console.error)
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [name]);
+  const fetchDetails = async () => {
+    if (!name) return;
+    try {
+      const data = await getPokemonDetails(name);
+      setPokemon(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchDetails();
+}, [name]);
 
   useEffect(() => {
     if (pokemon) {
@@ -62,7 +68,7 @@ export default function PokemonDetailPage() {
   if (loading)
     return <Loading text="Loading Pokémon details..." />;
 
-  if (!pokemon)
+  if (!pokemon || pokemon === undefined)
     return <EmptyListState text={"No Pokémon found"} />;
 
   const handleToggleFavorite = async () => {
